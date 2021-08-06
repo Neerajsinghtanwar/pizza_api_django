@@ -88,7 +88,7 @@ DATABASES = {
         'NAME': 'pizza',
         'USER': 'root',
         'PASSWORD': 'Asdf@1234',
-        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
+        'HOST': 'localhost', 
         'PORT': '3306',
     }
 }
