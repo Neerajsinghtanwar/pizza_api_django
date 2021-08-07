@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import serializers, viewsets, status
 from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response
@@ -10,6 +9,7 @@ import pandas as pd
 import uuid
 from django.core.mail import send_mail
 from pizza_api_django.settings import EMAIL_HOST_USER
+from rest_framework.filters import SearchFilter
 
 
 # Create your views here.
@@ -17,7 +17,8 @@ class UserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    search_fields = ['^name']
+    filter_backends = [SearchFilter]
+    search_fields = ['^username']
     
     def get_queryset(self):
         user = self.request.user
@@ -50,7 +51,7 @@ class StaffView(viewsets.ModelViewSet):
 
     permission_classes = [IsAdminUser]
 
-    search_fields = ['^name']
+    search_fields = ['^username']
   
     def create(self, request):
         serializer = UserSerializer(data=request.data)
