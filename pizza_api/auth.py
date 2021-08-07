@@ -1,7 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.response import Response
 from rest_framework import viewsets
-from django.core import serializers
 
 class AuthView(viewsets.ViewSet):
     def login(self, request):
@@ -15,7 +14,7 @@ class AuthView(viewsets.ViewSet):
             request.session['pass'] = upass
             login(request, user)
             data = {
-                'token':serializers.serialize("json", [user.auth_token])
+                'msg': 'logged in successfully'
             }
             return Response(data)
         else:

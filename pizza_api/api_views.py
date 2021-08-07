@@ -33,11 +33,12 @@ class UserView(viewsets.ModelViewSet):
             User.objects.create(first_name=serializer.validated_data['first_name'], last_name=serializer.validated_data['last_name'], email=serializer.validated_data['email'], username=serializer.validated_data['username'], password=p)
 
             # send welcome email:-
-            subject = "Someone Login On Library"
-            message = f"Welcome to Pizza App"
+            # for receive email please set your mail-id and password in settings.py's Email section.
+            subject = "Delecious Pizza Deleivery"
+            message = f"Hello, {request.data['first_name']} Welcome to our Pizza App"
             email_from = EMAIL_HOST_USER
             email = request.data['email']
-            send_mail(subject, message, email_from, [email], fail_silently=False)
+            # send_mail(subject, message, email_from, [email], fail_silently=False)
 
             return Response({'msg':'Created Successfuly'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors)
@@ -100,6 +101,8 @@ class OrderView(viewsets.ModelViewSet):
             return Order.objects.all()
         else:
             return Order.objects.filter(username=user)
+
+
 # create csv file of Users:- 
 class ExportExcel(APIView):
     def get(self, request):
